@@ -29,7 +29,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', function(req, res) {
-    res.render('./views/index.html', {title: "Hello"});
+    res.render('index', {title: "McHacks2017"});
 });
 
 app.listen(8080, function() {
