@@ -32,8 +32,8 @@ app.factory('postService', function($resource){
 	return $resource('/api/posts/:id');
 });
 
-app.controller('mainController', function(postService, $scope, $rootScope){	
-
+app.controller('mainController', function(postService, $scope, $rootScope, $log){	
+  $log.debug('asd');
 });
 
 app.controller('authController', function($scope, $http, $rootScope, $location){
