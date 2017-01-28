@@ -5,7 +5,12 @@ var users = require('./models/user');
 
 require('./routes/routes')(app);
 
-app.use(express.static(__dirname + '/views/'));
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.get('/', function(req, res) {
     res.render('index', {title: "McHacks2017"});
