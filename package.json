@@ -1,0 +1,26 @@
+{
+  "name": "mchacks2017",
+  "version": "1.0.0",
+  "description": "Startup Draft McHacks 2017",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patrickdh/McHacks2017.git"
+  },
+  "author": "matt,mark,patrick,jamie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/patrickdh/McHacks2017/issues"
+  },
+  "homepage": "https://github.com/patrickdh/McHacks2017#readme",
+  "dependencies": {
+    "angular": "^1.6.1",
+    "bcrypt-nodejs": "0.0.3",
+    "express": "^4.14.0",
+    "mongodb": "^2.2.22",
+    "mongoose": "^4.7.9"
+  }
+}
