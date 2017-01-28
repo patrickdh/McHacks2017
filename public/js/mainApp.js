@@ -16,16 +16,6 @@ app.config(function($routeProvider){
 			templateUrl: 'pages/main/dashboard.html',
 			controller: 'mainController'
 		})
-		//the login display
-		.when('/login', {
-			templateUrl: 'pages/login.html',
-			controller: 'authController'
-		})
-		//the signup display
-		.when('/signup', {
-			templateUrl: 'pages/signup.html',
-			controller: 'authController'
-		});
 });
 
 app.factory('postService', function($resource){
@@ -34,35 +24,4 @@ app.factory('postService', function($resource){
 
 app.controller('mainController', function(postService, $scope, $rootScope, $log){	
   $log.debug('asd');
-});
-
-app.controller('authController', function($scope, $http, $rootScope, $location){
-  $scope.user = {first_name: '', last_name: '', username: '', password: ''};
-  $scope.error_message = '';
-
-  $scope.login = function() {
-    // $http.post('/auth/login', $scope.user).success(function(data){
-    //   if(data.state == 'success'){
-    //     $rootScope.authenticated = true;
-    //     $rootScope.current_user = data.user.username;
-    //     $location.path('/');
-    //   }
-    //   else{
-    //     $scope.error_message = data.message;
-    //   }
-    // });
-  };
-
-  $scope.signup = function() {
-    // $http.post('/auth/signup', $scope.user).success(function(data){
-    //   if(data.state == 'success'){
-    //     $rootScope.authenticated = true;
-    //     $rootScope.current_user = data.user.username;
-    //     $location.path('/');
-    //   }
-    //   else{
-    //     $scope.error_message = data.message;
-    //   }
-    // });
-  };
 });
