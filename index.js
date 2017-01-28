@@ -8,7 +8,7 @@ require('./routes/routes')(app);
 app.use(express.static(__dirname + '/views/'));
 
 app.get('/', function(req, res) {
-    res.render('./views/index.html', {title: "Hello"});
+    res.render('index', {title: "McHacks2017"});
 });
 
 app.listen(8080, function() {
