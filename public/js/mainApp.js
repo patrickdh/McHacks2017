@@ -52,7 +52,7 @@ app.controller('authController', function(postService, $scope, $rootScope, $log)
   $scope.error_message = '';
 
   $scope.login = function() {
-    $http.post('/auth/login', $scope.user).success(function(data){
+    $http.post('/login', $scope.user).success(function(data){
       if(data.state == 'success'){
         $rootScope.authenticated = true;
         $rootScope.current_user = data.user;
@@ -65,7 +65,7 @@ app.controller('authController', function(postService, $scope, $rootScope, $log)
   };
 
   $scope.signup = function() {
-    $http.post('/auth/signup', $scope.user).success(function(data){
+    $http.post('/signup', $scope.user).success(function(data){
       if(data.state == 'success'){
         $rootScope.authenticated = true;
         $rootScope.current_user = data.user.username;
