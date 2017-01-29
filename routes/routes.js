@@ -7,11 +7,11 @@ module.exports = function(app){
   });
 
   app.get('/login', function(req, res) {
-    res.render('login', {title: 'McHacks2017 Secure'});
+    res.render('login', {title: 'McHacks2017 Login'});
   })
   
   app.get('/signup', function(req, res){
-    res.render('signup', {title: 'McHacks2017 Secure' });
+    res.render('signup', {title: 'McHacks2017 Signup' });
   });
 
   //when a new user is created successfully, send the user to the home/profile page

@@ -38,5 +38,5 @@ app.factory('postService', function($resource){
 });
 
 app.controller('mainController', function(postService, $scope, $rootScope, $log){	
-
+	$scope.subRoute = "AJskdl";
 });
