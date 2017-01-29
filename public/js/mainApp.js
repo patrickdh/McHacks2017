@@ -38,6 +38,10 @@ app.config(function($routeProvider, $locationProvider){
 			templateUrl: 'pages/trades.html',
 			controller: 'mainController'
 		})
+		.when('/bidding', {
+			templateUrl: 'pages/bidding.html',
+			controller: 'biddingController'
+		})
 		.when('/profile/edit', {
 			templateUrl: 'pages/profileEdit.html',
 			controller: 'mainController'
@@ -111,12 +115,44 @@ app.controller('companyController', function(postService, $scope, $rootScope, $h
 	}
 
 	var companyName = $location.search().name;
+	$http.get('https://autocomplete.clearbit.com/v1/companies/suggest?query=' + companyName).success(function(data) {
+		$scope.img = data[0].logo;
+	});
     $http.get('/company/' + companyName).success(function(data) {
-    	console.log(data);
      	$scope.company = data;
     });
 });
 
+app.controller('biddingController', function(postService, $scope, $rootScope, $http, $window, $location) {
+	if (!$rootScope.session_data || !$rootScope.session_data.authenticated) {
+		$window.location = '/login';
+		return;
+	}
+
+	$http.get('/companies').success(function(data) {
+     	$scope.companies = data;
+    });
+
+	$http.get('/user/' + $rootScope.session_data.current_user.username).success(function(data) {
+     	$scope.myuser = data;
+    });
+
+    $scope.confirm = function() {
+    	var bids = [];
+    	foreach (var i=0; i<$scope.companies.length; i++) {
+    		bids[i] = { company: $scope.companies[i].name, bid: $scope.companies[i].bid_price };
+    	}
+    	var bid_json = JSON.stringify(bids);
+	    $http.post('/bid', {user: $rootScope.session_data.current_user.username, bid_json: bid_json}).success(function(data) {
+	      if(data.state == 'success') {
+	        $window.location = '/';
+	      }
+	      else{
+	        $scope.error_message = data.error_message;
+	      }
+	    });
+    }
+});
 
 app.controller('authController', function(postService, $scope, $rootScope, $cookieStore, $http, $window) {	
   $scope.user = {first_name: '', last_name: '', username: '', password: ''};

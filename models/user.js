@@ -37,6 +37,7 @@ var userSchema = new mongoose.Schema({
     companies_owned: [String],
     companies_watched: [String],
     trades: [String],
+    bids_json: String,
     created_at: {type: Date, default: Date.now},
     updated_at: {type: Date, default: Date.now}
 });
