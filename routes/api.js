@@ -47,10 +47,10 @@ router.route('/profile/:user/trades/new')
 router.route('/profile/:user/trades')
     .get(function(req, res) {
         var username = req.params.user;
-        trade.find({from_username: username}, function(err, trades) {
+        Trade.find({from_username: username}, function(err, trades) {
             if (err) {
               return res.send(500, err);
             }
-            return res.send(200, posts);
+            return res.send(200, trades);
         });
     });

@@ -2,12 +2,14 @@ var mongoose = require('mongoose'),
     assert = require('assert'),
     bcrypt = require('bcrypt-nodejs');
 
-// Connection URL
-mongoose.connect('mongodb://localhost:27017/McHacks2017');
-
 var userSchema = new mongoose.Schema({
     first_name: String,
     last_name: String,
+    username: {
+      type: String,
+      required: true,
+      unique: true
+    },
     email: {
         type: String,
         required: true,
