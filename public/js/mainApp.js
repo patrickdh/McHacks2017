@@ -85,7 +85,7 @@ app.controller('authController', function(postService, $scope, $rootScope, $cook
         $window.location = '/';
       }
       else{
-        $scope.error_message = data.message;
+        $scope.error_message = data.error_message;
       }
     });
   };
@@ -97,7 +97,7 @@ app.controller('authController', function(postService, $scope, $rootScope, $cook
         $window.location = '/';
       }
       else{
-        $scope.error_message = data.message;
+        $scope.error_message = data.error_message;
       }
     });
   };
