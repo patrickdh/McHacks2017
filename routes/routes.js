@@ -2,9 +2,16 @@ module.exports = function(app){
 
   var controller = require('../index.js');
 
-  //what view to send when the login section is loaded
+  app.get('/', function(req, res) {
+      res.render('index', {title: "McHacks2017"});
+  });
+
+  app.get('/login', function(req, res) {
+    res.render('login', {title: 'McHacks2017 Secure'});
+  })
+  
   app.get('/signup', function(req, res){
-    res.send('./signup', {title: 'Test' });
+    res.render('signup', {title: 'McHacks2017 Secure' });
   });
 
   //when a new user is created successfully, send the user to the home/profile page
@@ -20,11 +27,6 @@ module.exports = function(app){
   //when the transactions page is loaded send transactions.html
   app.get('/transactions', function(req, res){
     res.sendFile('transactions.html', {root: __dirname});
-  });
-
-  //when the companies page is loaded send companies.html
-  app.get('/companies', function(req, res){
-    res.sendFile('companies.html', {root: __dirname});
   });
 
   //when the teams page is loaded send teams.html

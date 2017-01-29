@@ -11,19 +11,6 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-app.get('/', function(req, res) {
-    res.render('index', {title: "McHacks2017"});
-});
-
-app.get('/login', function(req, res) {
-	res.render('login', {title: 'McHacks2017 Secure'});
-})
-
-app.get('/signup', function(req, res) {
-	res.render('signup', {title: 'McHacks2017 Secure'});
-})
-
 app.listen(8080, function() {
   console.log('Kickin\' it in port 8080.');
 });
