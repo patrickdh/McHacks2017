@@ -55,6 +55,17 @@ app.route('/profile/:user/trades')
         });
     });
 
+    app.route('/user/:user')
+    .get(function(req, res) {
+        User.find({ username: req.params.user }).exec(function(err, users) {
+            if (err) {
+                return res.send(500, err);
+            }
+            return res.send(200, users[0]);
+        });
+    });
+
+
 app.route('/users')
     .get(function(req, res) {
         User.find().sort({ score: -1 }).exec(function(err, users) {
@@ -72,6 +83,16 @@ app.route('/companies')
                 return res.send(500, err);
             }
             return res.status(200).send(companies);
+        });
+    });
+
+app.route('/company/:company')
+    .get(function(req, res) {
+        Company.find({ name: req.params.company }).exec(function(err, companies) {
+            if (err) {
+                return res.send(500, err);
+            }
+            return res.send(200, companies[0]);
         });
     });
 }

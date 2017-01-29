@@ -16,7 +16,7 @@
             <div class="panel-heading" style="padding: 50px">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="huge" style="text-align: center">120</div>
+                        <div class="huge" style="text-align: center">{{myuser.companies_owned.length}}</div>
                         <div style="text-align: center">Companies Owned</div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                         <i class="fa fa-money fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">$12,000</div>
+                        <div class="huge">${{(myuser.capital / 100).toLocaleString()}}</div>
                         <div>Capital</div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                         <i class="fa fa-money fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">$1423</div>
+                        <div class="huge">${{(myuser.net_growth / 100).toLocaleString()}}</div>
                         <div>Net Growth</div>
                     </div>
                 </div>

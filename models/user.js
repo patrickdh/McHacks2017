@@ -30,6 +30,10 @@ var userSchema = new mongoose.Schema({
         default: 150000000000
     },
     score: Number,
+    net_growth:  {
+        type: Number,
+        default: 0
+    },
     companies_owned: [String],
     companies_watched: [String],
     trades: [String],

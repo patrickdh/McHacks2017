@@ -26,6 +26,10 @@ app.config(function($routeProvider, $locationProvider){
 			templateUrl: 'pages/companies.html',
 			controller: 'companiesController'
 		})
+		.when('/company', {
+			templateUrl: 'pages/company.html',
+			controller: 'companyController'
+		})
 		.when('/events', {
 			templateUrl: 'pages/events.html',
 			controller: 'mainController'
@@ -67,11 +71,15 @@ app.directive("bsActiveLink", function($location) {
 	}
 });
 
-app.controller('mainController', function(postService, $scope, $rootScope, $log, $window) {
+app.controller('mainController', function(postService, $scope, $rootScope, $http, $window) {
 	if (!$rootScope.session_data || !$rootScope.session_data.authenticated) {
 		$window.location = '/login';
 		return;
 	}
+
+	$http.get('/user/' + $rootScope.session_data.current_user.username).success(function(data) {
+     	$scope.myuser = data;
+    });
 });
 
 app.controller('usersController', function(postService, $scope, $rootScope, $http, $window) {
@@ -92,8 +100,20 @@ app.controller('companiesController', function(postService, $scope, $rootScope, 
 	}
 
     $http.get('/companies').success(function(data) {
-    	console.log(data);
      	$scope.companies = data;
+    });
+});
+
+app.controller('companyController', function(postService, $scope, $rootScope, $http, $window, $location) {
+	if (!$rootScope.session_data || !$rootScope.session_data.authenticated) {
+		$window.location = '/login';
+		return;
+	}
+
+	var companyName = $location.search().name;
+    $http.get('/company/' + companyName).success(function(data) {
+    	console.log(data);
+     	$scope.company = data;
     });
 });
 
