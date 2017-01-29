@@ -95,15 +95,19 @@ app.route('/company/:company')
             return res.send(200, companies[0]);
         });
     });
-}
 
-app.route('/bid')
-    .post(function(req, res) {
-        Company.find({ name: req.params.company }).exec(function(err, companies) {
-            if (err) {
-                return res.send(500, err);
-            }
-            return res.send(200, companies[0]);
-        });
-    });
+// app.route('/bid')
+//     .post(function(req, res) {
+//         trade.save(function(err, trade) {
+//             if (err) {
+//                 return res.send(500, err);
+//             }
+//             return res.json(trade);
+//         });
+//             if (err) {
+//                 return res.send(500, err);
+//             }
+//             return res.send(200, companies[0]);
+//         });
+//     });
 }

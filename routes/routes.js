@@ -3,15 +3,15 @@ module.exports = function(app){
   var controller = require('../index.js');
 
   app.get('/', function(req, res) {
-      res.render('index', {title: "McHacks2017"});
+      res.render('index', {title: "King of Sand Hill"});
   });
 
   app.get('/login', function(req, res) {
-    res.render('login', {title: 'McHacks2017 Secure'});
+    res.render('login', {title: 'King of Sand Hill'});
   });
 
   app.get('/signup', function(req, res){
-    res.render('signup', {title: 'McHacks2017 Signup'});
+    res.render('signup', {title: 'King of Sand Hill'});
   });
 
   //when a new user is created successfully, send the user to the home/profile page

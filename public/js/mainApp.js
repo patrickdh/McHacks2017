@@ -115,7 +115,9 @@ app.controller('companyController', function(postService, $scope, $rootScope, $h
 	}
 
 	var companyName = $location.search().name;
-	$http.get('https://autocomplete.clearbit.com/v1/companies/suggest?query=' + companyName).success(function(data) {
+	var query = companyName;
+	if (query == 'Snap') query = 'Snapchat';
+	$http.get('https://autocomplete.clearbit.com/v1/companies/suggest?query=' + query).success(function(data) {
 		$scope.img = data[0].logo;
 	});
     $http.get('/company/' + companyName).success(function(data) {
@@ -139,7 +141,7 @@ app.controller('biddingController', function(postService, $scope, $rootScope, $h
 
     $scope.confirm = function() {
     	var bids = [];
-    	foreach (var i=0; i<$scope.companies.length; i++) {
+    	for (var i=0; i<$scope.companies.length; i++) {
     		bids[i] = { company: $scope.companies[i].name, bid: $scope.companies[i].bid_price };
     	}
     	var bid_json = JSON.stringify(bids);
