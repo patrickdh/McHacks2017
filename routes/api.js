@@ -1,9 +1,3 @@
-var express = require('express'),
-    router = express.Router(),
-    mongoose = require('mongoose'),
-    Trade = mongoose.model('Trade'),
-    User = mongoose.model('User');
-
 function isAuthenticated(req, res, next) {
     if (req.method === "GET") {
         return next();
@@ -11,12 +5,17 @@ function isAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    return res.redirect('/#login');
+    return res.redirect('/login');
 }
 
-router.use('/profile/', isAuthenticated);
+module.exports = function(app) {
+    var mongoose = require('mongoose'),
+        Trade = mongoose.model('Trade'),
+        User = mongoose.model('User');
 
-router.route('/profile/:user/trades/new')
+app.use('/profile/', isAuthenticated);
+
+app.route('/profile/:user/trades/new')
     .post(function(req, res) {
         var trade = new Trade();
         trade.from_username = req.body.from_username;
@@ -44,7 +43,7 @@ router.route('/profile/:user/trades/new')
     });
 
 //Get all trades
-router.route('/profile/:user/trades')
+app.route('/profile/:user/trades')
     .get(function(req, res) {
         var username = req.params.user;
         Trade.find({from_username: username}, function(err, trades) {
@@ -54,3 +53,14 @@ router.route('/profile/:user/trades')
             return res.send(200, trades);
         });
     });
+
+app.route('/users')
+    .get(function(req, res) {
+        User.find().sort({ score: -1 }).exec(function(err, users) {
+            if (err) {
+                return res.send(500, err);
+            }
+            return res.send(200, users);
+        });
+    });
+}

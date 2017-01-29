@@ -13,6 +13,7 @@ var app = express();
 mongoose.connect('mongodb://localhost:27017/McHacks2017');
 
 require('./routes/routes')(app);
+require('./routes/api.js')(app);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -25,7 +25,10 @@ var userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    capital: Number,
+    capital: {
+        type: Number,
+        default: 150000000000
+    },
     score: Number,
     companies_owned: [String],
     companies_watched: [String],

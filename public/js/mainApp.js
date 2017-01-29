@@ -20,7 +20,7 @@ app.config(function($routeProvider, $locationProvider){
 		})		
 		.when('/users', {
 			templateUrl: 'pages/users.html',
-			controller: 'mainController'
+			controller: 'usersController'
 		})	
 		.when('/companies', {
 			templateUrl: 'pages/companies.html',
@@ -72,6 +72,17 @@ app.controller('mainController', function(postService, $scope, $rootScope, $log,
 		$window.location = '/login';
 		return;
 	}
+});
+
+app.controller('usersController', function(postService, $scope, $rootScope, $http, $window) {
+	if (!$rootScope.session_data || !$rootScope.session_data.authenticated) {
+		$window.location = '/login';
+		return;
+	}
+
+    $http.get('/users').success(function(data) {
+     	$scope.users = data;
+    });
 });
 
 app.controller('authController', function(postService, $scope, $rootScope, $cookieStore, $http, $window) {	

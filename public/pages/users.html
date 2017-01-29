@@ -20,11 +20,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td><a href="">John Doe</a></td>
-                                <td><img src=""></img></td>
-                                <td>$10,000</td>
+                            <tr ng-repeat="user in users">
+                                <td>{{$index+1}}</td>
+                                <td><a href="">{{user.username}}</a></td>
+                                <td>{{user.companies_owned.length}}</td>
+                                <td>${{(user.capital / 100).toLocaleString()}}</td>
                             </tr>
                         </tbody>
                     </table>
