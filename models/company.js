@@ -8,7 +8,8 @@ var companySchema = new mongoose.Schema({
     growth: Number,
     num_employees: String,
     funding_rounds: Number,
-    total_funding: Number
+    total_funding: Number,
+    user: String
 });
 
 var Company = mongoose.model('Company', companySchema);

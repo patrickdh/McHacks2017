@@ -68,7 +68,7 @@ app.route('/profile/:user/trades')
 
 app.route('/users')
     .get(function(req, res) {
-        User.find().sort({ score: -1 }).exec(function(err, users) {
+        User.find().sort({ companies_owned: -1 }).exec(function(err, users) {
             if (err) {
                 return res.send(500, err);
             }
@@ -96,18 +96,69 @@ app.route('/company/:company')
         });
     });
 
-// app.route('/bid')
-//     .post(function(req, res) {
-//         trade.save(function(err, trade) {
-//             if (err) {
-//                 return res.send(500, err);
-//             }
-//             return res.json(trade);
-//         });
-//             if (err) {
-//                 return res.send(500, err);
-//             }
-//             return res.send(200, companies[0]);
-//         });
-//     });
+app.route('/bid/:user')
+    .post(function(req, res) {
+        Company.find({}, function(err, companies) {
+            if (err) return res.send(500, {error_message: err});
+            for (var j=0; j<companies.length; j++) 
+            for (var i=0; i<req.body.bids.length; i++) {
+                if (companies[j].name == req.body.bids[i].company && req.body.bids[i].price > 0) {
+                    companies[j].user = req.params.user;
+                    break;
+                }
+
+                companies[j].save(function(err, company) {
+                    if (err) {
+                        return res.send(500, {error_message: err});
+                    }
+                });
+            }
+        });
+
+        User.findOne({username: req.params.user}, function(err, cuser) {
+                if (err) return res.send(500, {error_message: err});
+
+            var companies_owned = [];
+            for (var i=0; i<req.body.bids.length; i++) {
+                if (req.body.bids[i].price > 0) {
+                    companies_owned[i] = req.body.bids[i].company;
+                    cuser.capital = cuser.capital - req.body.bids[i].price * 100;
+                }
+            }
+            // hack lol
+            var cleanedOwned = [];
+            var cleanIndex = 0;
+            for (var i=0; i<companies_owned.length; i++) {
+                if (companies_owned[i]) {
+                    cleanedOwned[cleanIndex++] = companies_owned[i];
+                }
+            }
+            companies_owned = cleanedOwned;
+            User.findOneAndUpdate({username: req.params.user}, { capital: cuser.capital, companies_owned: companies_owned, bids_json: JSON.stringify(req.body.bids) }, {upsert:true}, function(err, doc){
+                if (err) return res.send(500, { error_message: err });
+                return res.status(200).send({ state: 'success'});
+            });
+        });
+    });
+
+app.route('/bid/:user')
+    .get(function(req, res) {
+        User.findOne({username: req.params.user}, function(err, doc) {
+            if (err) return res.send(500, { error_message: err });
+            return res.status(200).send(doc);
+        });
+        // User.findOne({ username: req.params.user }).exec(function(err, user) {
+        //     if (err) {
+        //         return res.send(500, err);
+        //     }
+        //     console.log(user);
+            
+        //     user.save(function(err, userupdated) {
+        //     if (err) {
+        //         return res.send(500, err);
+        //     }
+        //     return res.json(userupdated);
+        //     });
+        // });
+    });
 }

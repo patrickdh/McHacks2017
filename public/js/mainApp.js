@@ -131,8 +131,25 @@ app.controller('biddingController', function(postService, $scope, $rootScope, $h
 		return;
 	}
 
+	$scope.error_message = '';
+
 	$http.get('/companies').success(function(data) {
      	$scope.companies = data;
+
+     	for (var i=0; i<$scope.companies.length; i++) {
+	    	$scope.companies[i].bid_price = 0;
+	    }
+
+     	$http.get('/bid/' + $rootScope.session_data.current_user.username).success(function(data) {
+	      if(data.error_message) {
+	      	$scope.error_message = data.error_message;
+	      }
+	      else{
+	      	for (var i=0; i<$scope.companies.length; i++) {
+	      		$scope.companies[i].bid_price = JSON.parse(data.bids_json)[i].price;
+	      	}
+	      }
+	});
     });
 
 	$http.get('/user/' + $rootScope.session_data.current_user.username).success(function(data) {
@@ -142,10 +159,19 @@ app.controller('biddingController', function(postService, $scope, $rootScope, $h
     $scope.confirm = function() {
     	var bids = [];
     	for (var i=0; i<$scope.companies.length; i++) {
-    		bids[i] = { company: $scope.companies[i].name, bid: $scope.companies[i].bid_price };
+    		var price = $scope.companies[i].bid_price ? $scope.companies[i].bid_price : 0;
+    		bids[i] = { company: $scope.companies[i].name, price: price };
     	}
-    	var bid_json = JSON.stringify(bids);
-	    $http.post('/bid', {user: $rootScope.session_data.current_user.username, bid_json: bid_json}).success(function(data) {
+    	var sum = 0;
+    	for (var i=0; i<bids.length; i++) {
+    		if (!bids[i].price) { continue; }
+    		sum += bids[i].price;
+    	}
+    	if (sum > $scope.myuser.capital / 100) {
+    		$scope.error_message = 'You don\'t have enough funds. You are $' + (sum-($scope.myuser.capital / 100)).toLocaleString() + ' over. Please try again.';
+    		return;
+    	}
+	    $http.post('/bid/' + $rootScope.session_data.current_user.username, {bids: bids}).success(function(data) {
 	      if(data.state == 'success') {
 	        $window.location = '/';
 	      }

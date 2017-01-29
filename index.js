@@ -12,15 +12,12 @@ var app = express();
 // Connection URL
 mongoose.connect('mongodb://localhost:27017/McHacks2017');
 
-require('./routes/routes')(app);
-require('./routes/api.js')(app);
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
@@ -35,5 +32,7 @@ app.listen(8080, function() {
 });
 
 require('./routes/authenticate')(app, passport);
+require('./routes/routes')(app);
+require('./routes/api.js')(app);
 
 module.exports = app;

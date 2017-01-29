@@ -1,8 +1,11 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header"><b>Bidding</b> - You got $<span id="swag">{{(myuser.capital / 100).toLocaleString()}}</span></h1>
+        <h1 class="page-header"><b>Bidding</b> - You have $<span id="swag">{{(myuser.capital / 100).toLocaleString()}}</span> in funds</h1>
     </div>
     <!-- /.col-lg-12 -->
+</div>
+<div ng-show="error_message != ''" class="alert alert-danger" role="alert" style="padding: 7px">
+  {{error_message}}
 </div>
 <!-- /.row -->
 <div class="row">
@@ -13,7 +16,6 @@
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th></th>
                                 <th>Company</th>
                                 <th>Employees</th>
                                 <th>Total Capital</th>
@@ -22,11 +24,10 @@
                         </thead>
                         <tbody ng-model="bidding_stuff">
                             <tr ng-repeat="company in companies">
-                                <td><input type="checkbox"></input></td>
                                 <td><a href="/#/company?name={{company.name}}">{{company.name}}</a></td>
                                 <td>{{ company.employee.split('to').join(' to ') }}</td>
                                 <td>${{ (company.total_funding).toLocaleString() }}</td>
-                                <td><input ng-model="companies[$index].bid_price" class="mc-bid-amount" type="number" min="0"></input></td>
+                                <td><input ng-model="companies[$index].bid_price" class="mc-bid-amount" type="number" min="0" style="width: 75px"></input></td>
                             </tr>
                         </tbody>
                     </table>
