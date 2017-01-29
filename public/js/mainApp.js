@@ -92,6 +92,7 @@ app.controller('companiesController', function(postService, $scope, $rootScope, 
 	}
 
     $http.get('/companies').success(function(data) {
+    	console.log(data);
      	$scope.companies = data;
     });
 });

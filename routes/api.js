@@ -71,6 +71,7 @@ app.route('/companies')
             if (err) {
                 return res.send(500, err);
             }
+            console.log(companies);
             return res.status(200).send(companies);
         });
     });
