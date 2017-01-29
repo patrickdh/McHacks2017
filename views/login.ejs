@@ -53,11 +53,11 @@
                     <div class="panel-body">
                         <form role="form">
                             <fieldset>
-                               <div style="margin-top: 0; margin-bottom: 10px">
-                                {{error_message}}
-                                </div>
+<div ng-show="error_message != ''" class="alert alert-danger" role="alert" style="padding: 7px">
+  {{error_message}}
+</div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Username" name="username" type="username" ng-model="user.username" autofocus>
+                                    <input class="form-control has-error" placeholder="Username" name="username" type="username" ng-model="user.username" autofocus>
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Password" name="password" type="password" ng-model="user.password" value="">
