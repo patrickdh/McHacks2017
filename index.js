@@ -8,7 +8,6 @@ var passport = require('passport');
 var api = require('./routes/api');
 var mongoose = require('mongoose');
 var session = require('express-session');
-var authenticate = require('./routes/authenticate')(passport);
 var app = express();
 // Connection URL
 mongoose.connect('mongodb://localhost:27017/McHacks2017');
@@ -27,10 +26,13 @@ app.use(session({
   secret: 'keyboard cat'
 }));
 app.use(passport.initialize());
+require('./passport-init')(passport);
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 app.listen(8080, function() {
   console.log('Kickin\' it in port 8080.');
 });
+
+require('./routes/authenticate')(app, passport);
 
 module.exports = app;

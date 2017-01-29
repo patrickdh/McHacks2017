@@ -50,21 +50,20 @@ module.exports = function(passport) {
 
     passport.use('signup', new LocalStrategy({
             passReqToCallback: true // allows us to pass back the entire request to the callback
-        },
+        }, 
         function(req, username, password, done) {
-
             // find a user in mongo with provided username
             User.findOne({
                 'username': username
-            }, function(err, user) {
+            }, function(err, fetchedUser) {
                 // In case of any error, return using the done method
                 if (err) {
                     console.log('Error in SignUp: ' + err);
                     return done(err);
                 }
                 // already exists
-                if (user) {
-                    console.log('User already exists with username: ' + username);
+                if (fetchedUser) {
+                    console.log('User already exists with username: ' + fetchedUser.username);
                     return done(null, false);
                 } else {
                     // if there is no user, create the user
@@ -72,6 +71,8 @@ module.exports = function(passport) {
 
                     // set the user's local credentials
                     newUser.username = username;
+                    newUser.first_name = req.body.first_name;
+                    newUser.last_name = req.body.last_name;
                     newUser.password = createHash(password);
 
                     // save the user
@@ -85,7 +86,8 @@ module.exports = function(passport) {
                     });
                 }
             });
-        }));
+        }
+    ));
 
     var isValidPassword = function(user, password) {
         return bCrypt.compareSync(password, user.password);

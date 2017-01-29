@@ -1,11 +1,10 @@
-var app = angular.module('mainApp', ['ngRoute', 'ngResource']).run(function($rootScope) {
-	$rootScope.authenticated = false;
-	$rootScope.current_user = {};
-	
+var app = angular.module('mainApp', ['ngRoute', 'ngResource', 'ngCookies']).run(function($rootScope, $cookieStore) {
+
+	$rootScope.session_data = JSON.parse($cookieStore.get('session_data'));
+
 	$rootScope.signout = function(){
-    	$http.get('auth/signout');
-    	$rootScope.authenticated = false;
-    	$rootScope.current_user = {};
+    	$http.get('/signout');
+    	$rootScope.session_data = null;
 	};
 });
 
@@ -41,22 +40,22 @@ app.factory('postService', function($resource){
 	return $resource('/api/posts/:id');
 });
 
-app.controller('mainController', function(postService, $scope, $rootScope, $log) {
-	if (!$rootScope.authenticated) {
-		$location.path('/');
+app.controller('mainController', function(postService, $scope, $rootScope, $log, $window) {
+	if (!$rootScope.session_data.authenticated) {
+		$window.location = '/login';
+		return;
 	}
 });
 
-app.controller('authController', function(postService, $scope, $rootScope, $log) {	
+app.controller('authController', function(postService, $scope, $rootScope, $cookieStore, $http, $window) {	
   $scope.user = {first_name: '', last_name: '', username: '', password: ''};
   $scope.error_message = '';
 
   $scope.login = function() {
-    $http.post('/login', $scope.user).success(function(data){
-      if(data.state == 'success'){
-        $rootScope.authenticated = true;
-        $rootScope.current_user = data.user;
-        $location.path('/');
+    $http.post('/login', $scope.user).success(function(data) {
+      if(data.state == 'success') {
+       	$cookieStore.put('session_data', JSON.stringify({ current_user: { name: data.name, username: data.username }, authenticated: true }));
+        $window.location = '/';
       }
       else{
         $scope.error_message = data.message;
@@ -65,11 +64,10 @@ app.controller('authController', function(postService, $scope, $rootScope, $log)
   };
 
   $scope.signup = function() {
-    $http.post('/signup', $scope.user).success(function(data){
+    $http.post('/signup', $scope.user).success(function(data) {
       if(data.state == 'success'){
-        $rootScope.authenticated = true;
-        $rootScope.current_user = data.user.username;
-        $location.path('/');
+       	$cookieStore.put('session_data', JSON.stringify({ current_user: { name: data.name, username: data.username }, authenticated: true }));
+        $window.location = '/';
       }
       else{
         $scope.error_message = data.message;

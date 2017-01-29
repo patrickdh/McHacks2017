@@ -18,6 +18,7 @@
   "homepage": "https://github.com/patrickdh/McHacks2017#readme",
   "dependencies": {
     "angular": "^1.6.1",
+    "angular-cookies": "^1.6.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.16.0",
     "express": "^4.14.0",
