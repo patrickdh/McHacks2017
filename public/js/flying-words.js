@@ -258,7 +258,7 @@ function centerTitle() {
 	}
 }
 
-	var availableWords = ["https://cdn0.iconfinder.com/data/icons/social-flat-rounded-rects/512/snapchat-512.png", "https://cdn1.iconfinder.com/data/icons/logotypes/32/square-facebook-512.png", "https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png"]; 
+	var availableWords = ["https://ih0.redbubble.net/image.222702072.4474/flat,800x800,075,f.jpg", "http://cdn.geekwire.com/wp-content/uploads/2016/02/uberriderlogo-e1454443856991-300x300.png", "https://lh6.ggpht.com/XLAmiOMdTvHb8kuWuxDSJsNkmNPd3DRGHH3WWTVSzRZ8Wx8tsDSKhBlro7g7FYyCYA=w300", "https://cdn0.iconfinder.com/data/icons/social-flat-rounded-rects/512/snapchat-512.png", "https://cdn1.iconfinder.com/data/icons/logotypes/32/square-facebook-512.png", "https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png"]; 
 
 	// We keep a record of the timer, so it can be stopped by other scripts if necessary
 	var timer;
