@@ -20,11 +20,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td><a href="">Company 1</a></td>
-                                <td><img src=""></img></td>
-                                <td>$10,000</td>
+                            <tr ng-repeat="company in companies">
+                                <td>{{$index+1}}</td>
+                                <td><a href="">{{company.name}}</a></td>
+                                <td>{{company.num_employees}}</td>
+                                <td>${{(company.total_funding).toLocaleString()}}</td>
                             </tr>
                         </tbody>
                     </table>

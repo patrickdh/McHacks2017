@@ -11,7 +11,8 @@ function isAuthenticated(req, res, next) {
 module.exports = function(app) {
     var mongoose = require('mongoose'),
         Trade = mongoose.model('Trade'),
-        User = mongoose.model('User');
+        User = mongoose.model('User'),
+        Company = mongoose.model('Company');
 
 app.use('/profile/', isAuthenticated);
 
@@ -61,6 +62,16 @@ app.route('/users')
                 return res.send(500, err);
             }
             return res.send(200, users);
+        });
+    });
+
+app.route('/companies')
+    .get(function(req, res) {
+        Company.find().sort({ total_funding: -1 }).exec(function(err, companies) {
+            if (err) {
+                return res.send(500, err);
+            }
+            return res.status(200).send(companies);
         });
     });
 }

@@ -24,7 +24,7 @@ app.config(function($routeProvider, $locationProvider){
 		})	
 		.when('/companies', {
 			templateUrl: 'pages/companies.html',
-			controller: 'mainController'
+			controller: 'companiesController'
 		})
 		.when('/events', {
 			templateUrl: 'pages/events.html',
@@ -84,6 +84,18 @@ app.controller('usersController', function(postService, $scope, $rootScope, $htt
      	$scope.users = data;
     });
 });
+
+app.controller('companiesController', function(postService, $scope, $rootScope, $http, $window) {
+	if (!$rootScope.session_data || !$rootScope.session_data.authenticated) {
+		$window.location = '/login';
+		return;
+	}
+
+    $http.get('/companies').success(function(data) {
+     	$scope.companies = data;
+    });
+});
+
 
 app.controller('authController', function(postService, $scope, $rootScope, $cookieStore, $http, $window) {	
   $scope.user = {first_name: '', last_name: '', username: '', password: ''};
