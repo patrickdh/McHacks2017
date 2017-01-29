@@ -30,6 +30,10 @@ app.config(function($routeProvider, $locationProvider){
 		.when('/trades', {
 			templateUrl: 'pages/trades.html',
 			controller: 'mainController'
+		})
+		.when('/profile/edit', {
+			templateUrl: 'pages/profileEdit.html',
+			controller: 'mainController'
 		});
 });
 
