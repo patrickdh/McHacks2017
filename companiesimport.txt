@@ -1,0 +1,1 @@
+mongoimport --db McHacks2017 --collection companies --file companies.json --jsonArray
