@@ -1,10 +1,14 @@
-var app = angular.module('mainApp', ['ngRoute', 'ngResource', 'ngCookies']).run(function($rootScope, $cookieStore) {
+var app = angular.module('mainApp', ['ngRoute', 'ngResource', 'ngCookies']).run(function($rootScope, $cookieStore, $http, $window) {
 
-	$rootScope.session_data = JSON.parse($cookieStore.get('session_data'));
+	var sessionCookieJson = $cookieStore.get('session_data');
+	$rootScope.session_data = null;
+	if (sessionCookieJson) $rootScope.session_data = JSON.parse(sessionCookieJson);
 
 	$rootScope.signout = function(){
     	$http.get('/signout');
+       	$cookieStore.remove('session_data');
     	$rootScope.session_data = null;
+    	$window.location = '/login';
 	};
 });
 
@@ -41,7 +45,7 @@ app.factory('postService', function($resource){
 });
 
 app.controller('mainController', function(postService, $scope, $rootScope, $log, $window) {
-	if (!$rootScope.session_data.authenticated) {
+	if (!$rootScope.session_data || !$rootScope.session_data.authenticated) {
 		$window.location = '/login';
 		return;
 	}

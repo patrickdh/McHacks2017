@@ -20,6 +20,7 @@ module.exports = function(app, passport) {
     //log in
     app.post('/login', function(req, res, next) {
         passport.authenticate('login', function(err, user, info) {
+            console.log('ello');
             if (user) { 
                 var name = user.first_name && user.last_name ? user.first_name + ' ' + user.last_name : null;
                 res.send({ state: 'success', username: user.username, name: name });
