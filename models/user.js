@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 // Connection URL
 mongoose.connect('mongodb://localhost:27017/McHacks2017');
 
-var userSchema = mongoose.Schema({
+var userSchema = new mongoose.Schema({
     first_name: String,
     last_name: String,
     email: {
@@ -35,6 +35,8 @@ userSchema.pre('save', function(next) {
 
     next();
 });
+
+mongoose.Schema.Types.Company = userSchema;
 
 module.exports = User;
 
